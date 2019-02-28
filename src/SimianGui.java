@@ -59,11 +59,13 @@ public class SimianGui extends JPanel {
         this.editTestCaseArea.setLayout(new MigLayout("wrap 1"));
         this.scrollEditTestCaseArea = new JScrollPane(this.editTestCaseArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.scrollEditTestCaseArea.setPreferredSize(new Dimension(250, 400));
+        this.scrollEditTestCaseArea.getVerticalScrollBar().setUnitIncrement(16);
         this.add(this.scrollEditTestCaseArea, "span 2 6");
 
         this.outputCodeArea = new JTextArea();
         this.scrollOutputCodeArea = new JScrollPane(this.outputCodeArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.scrollOutputCodeArea.setPreferredSize(new Dimension(250, 400));
+        this.scrollOutputCodeArea.getVerticalScrollBar().setUnitIncrement(16);
         this.add(this.scrollOutputCodeArea, "span 2 6");
 
         this.inputHeaderArea = new JTextArea(
@@ -76,12 +78,14 @@ public class SimianGui extends JPanel {
         );
         this.scrollInputHeaderArea = new JScrollPane(this.inputHeaderArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.scrollInputHeaderArea.setPreferredSize(new Dimension(250, 350));
+        this.scrollInputHeaderArea.getVerticalScrollBar().setUnitIncrement(16);
         this.add(this.scrollInputHeaderArea, "span 2 4");
 
         this.addTestCaseArea = new JPanel();
         this.addTestCaseArea.setLayout(new MigLayout("wrap 2"));
         this.scrollAddTestCaseArea = new JScrollPane(this.addTestCaseArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.scrollAddTestCaseArea.setPreferredSize(new Dimension(300, 350));
+        this.scrollAddTestCaseArea.getVerticalScrollBar().setUnitIncrement(16);
         this.add(this.scrollAddTestCaseArea, "span 2 4");
 
         this.inputHeaderButton = new JButton("Submit Header");
@@ -129,23 +133,25 @@ public class SimianGui extends JPanel {
 
     // Uses the values in the ADD_TESTCASE_AREA to create a JPanel displaying them
     // JPanel contains a self destruct button
-    private JPanel createTestCase(){
+    private JPanel createTestCase() {
 
         // Create testcase frame
         JPanel testCase = new JPanel();
         testCase.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         testCase.setLayout(new MigLayout("wrap 2"));
 
+        // Create self destruct button
+        JButton deleteCase = new JButton("X");
+        deleteCase.addActionListener(new DeleteParentButtonListener());
 
+        populateTestCase(testCase);
+        testCase.add(deleteCase, "span 1");
 
         return testCase;
     }
 
-    private void addTestCase() {
-        JPanel testCaseBox = new JPanel();
-        testCaseBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        testCaseBox.setLayout(new MigLayout("wrap 2"));
-
+    // fills a JPanel based off of input from ADD_TESTCASE_AREA
+    private void populateTestCase(JPanel testCase) {
         Component[] components = this.addTestCaseArea.getComponents();
         for (int i = 0; i < components.length - 1; i++) {
             if (components[i] instanceof JTextField) {
@@ -162,18 +168,21 @@ public class SimianGui extends JPanel {
                 copyLabel.setText(current_label.getText());
                 copyLabel.setSize(current_label.getSize());
 
-                testCaseBox.add(copyLabel, "span 1");
-                testCaseBox.add(copyTextfield, "span 1");
-                this.editTestCaseArea.add(testCaseBox);
-                this.editTestCaseArea.revalidate();
+                testCase.add(copyLabel, "span 1");
+                testCase.add(copyTextfield, "span 1");
 
             }
         }
         JLabel waitLabel = new JLabel();
         JTextField lastComponent = (JTextField) components[components.length - 1];
         waitLabel.setText(lastComponent.getText());
-        this.editTestCaseArea.add(waitLabel, "span 2");
+        testCase.add(waitLabel, "span 1");
+    }
+
+    private void addTestCase() {
+        this.editTestCaseArea.add(createTestCase(), "span 1");
         this.editTestCaseArea.revalidate();
+        this.editTestCaseArea.updateUI();
     }
 
     private void submitHeader() {
@@ -192,12 +201,37 @@ public class SimianGui extends JPanel {
 
     }
 
+    private void killParent(Component child){
+
+        // child is the button
+
+        // parent is the test case panel
+        Component parent = child.getParent();
+
+        // grandparent is the edit test case panel
+        this.editTestCaseArea.remove(parent);
+        this.scrollEditTestCaseArea.repaint();
+        this.scrollEditTestCaseArea.updateUI();
+    }
+
     private class InputHeaderButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             submitHeader();
 
+        }
+    }
+
+    private class DeleteParentButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object source = e.getSource();
+            if (source instanceof Component){
+                Component child = (Component) source;
+                killParent(child);
+            }
         }
     }
 
