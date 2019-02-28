@@ -39,9 +39,12 @@ public class HeaderParser {
     public ArrayList<String> findInputs() {
         ArrayList<String> inputs = new ArrayList<String>();
 
-        for (String s : this.sanitize(this.header).split(",")){
-            inputs.add(s);
+        for (String s : this.sanitize(this.header).split(",")) {
+            if (!(s.equals(""))) {
+                inputs.add(s);
+            }
         }
+
         return inputs;
     }
 

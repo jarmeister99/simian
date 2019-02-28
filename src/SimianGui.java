@@ -139,13 +139,10 @@ public class SimianGui extends JPanel {
         testCase.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         testCase.setLayout(new MigLayout("wrap 2"));
 
-        // Create self destruct button
-        JButton deleteCase = new JButton("X");
-        deleteCase.addActionListener(new DeleteParentButtonListener());
+
 
         // Populate testcase frame
         populateTestCase(testCase);
-        testCase.add(deleteCase, "span 1");
 
         return testCase;
     }
@@ -153,53 +150,72 @@ public class SimianGui extends JPanel {
     // fills a JPanel based off of input from ADD_TESTCASE_AREA
     private void populateTestCase(JPanel testCase) {
         Component[] components = this.addTestCaseArea.getComponents();
-        for (int i = 0; i < components.length - 1; i++) {
-            if (components[i] instanceof JTextField) {
-                JTextField currentTextField = (JTextField) components[i];
-                JLabel current_label = (JLabel) components[i + 1];
-                if (!(currentTextField.getText().equals("0"))) {
-                    System.out.println(currentTextField.getText());
-                    JTextField copyTextfield = new JTextField();
-                    copyTextfield.setText(currentTextField.getText());
-                    currentTextField.setText("0");
-                    copyTextfield.setSize(currentTextField.getSize());
+        if (components.length != 0) {
+            for (int i = 0; i < components.length - 1; i++) {
+                if (components[i] instanceof JTextField) {
+                    JTextField currentTextField = (JTextField) components[i];
+                    JLabel current_label = (JLabel) components[i + 1];
+                    if (!(currentTextField.getText().equals("0"))) {
+                        JTextField copyTextfield = new JTextField();
+                        copyTextfield.setText(currentTextField.getText());
+                        currentTextField.setText("0");
+                        copyTextfield.setSize(currentTextField.getSize());
 
 
-                    JLabel copyLabel = new JLabel();
-                    copyLabel.setText(current_label.getText());
-                    copyLabel.setSize(current_label.getSize());
+                        JLabel copyLabel = new JLabel();
+                        copyLabel.setText(current_label.getText());
+                        copyLabel.setSize(current_label.getSize());
 
-                    testCase.add(copyLabel, "span 1");
-                    testCase.add(copyTextfield, "span 1");
+                        testCase.add(copyLabel, "span 1");
+                        testCase.add(copyTextfield, "span 1");
+                    }
+
                 }
-
             }
+            JLabel waitLabel = new JLabel();
+            JTextField lastComponent = (JTextField) components[components.length - 1];
+            waitLabel.setText(lastComponent.getText());
+            testCase.add(waitLabel, "span 1");
+
+            // Create self destruct button
+            JButton deleteCase = new JButton("X");
+            deleteCase.addActionListener(new DeleteParentButtonListener());
+            testCase.add(deleteCase, "span 1");
         }
-        JLabel waitLabel = new JLabel();
-        JTextField lastComponent = (JTextField) components[components.length - 1];
-        waitLabel.setText(lastComponent.getText());
-        testCase.add(waitLabel, "span 1");
     }
 
     private void addTestCase() {
-        this.editTestCaseArea.add(createTestCase(), "span 1");
-        this.editTestCaseArea.revalidate();
-        this.editTestCaseArea.updateUI();
+        if (addTestCaseArea.getComponents().length > 0) {
+            this.editTestCaseArea.add(createTestCase(), "span 1");
+            this.editTestCaseArea.revalidate();
+            this.editTestCaseArea.updateUI();
+        }
     }
 
     private void submitHeader() {
         // remove current signals
         addTestCaseArea.removeAll();
+        signals.clear();
 
         // load input header to header parser
         headerParser.load(inputHeaderArea.getText());
 
         // get signals from header parser
         signals = headerParser.findInputs();
-        for (String signal : signals) {
-            addSignal(signal);
+
+        if (signals.size() > 0){
+            for (String signal : signals) {
+                addSignal(signal);
+            }
+            addWait();
         }
-        addWait();
+        else{
+            /* TODO: turn this into a reset function */
+            addTestCaseArea.removeAll();
+            addTestCaseArea.repaint();
+            editTestCaseArea.removeAll();
+            editTestCaseArea.repaint();
+        }
 
     }
 
