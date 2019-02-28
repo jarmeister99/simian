@@ -127,8 +127,23 @@ public class SimianGui extends JPanel {
         this.addTestCaseArea.revalidate();
     }
 
+    // Uses the values in the ADD_TESTCASE_AREA to create a JPanel displaying them
+    // JPanel contains a self destruct button
+    private JPanel createTestCase(){
+
+        // Create testcase frame
+        JPanel testCase = new JPanel();
+        testCase.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        testCase.setLayout(new MigLayout("wrap 2"));
+
+
+
+        return testCase;
+    }
+
     private void addTestCase() {
         JPanel testCaseBox = new JPanel();
+        testCaseBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         testCaseBox.setLayout(new MigLayout("wrap 2"));
 
         Component[] components = this.addTestCaseArea.getComponents();
@@ -147,8 +162,10 @@ public class SimianGui extends JPanel {
                 copyLabel.setText(current_label.getText());
                 copyLabel.setSize(current_label.getSize());
 
-                this.editTestCaseArea.add(copyLabel, "span 1");
-                this.editTestCaseArea.add(copyTextfield, "span 1");
+                testCaseBox.add(copyLabel, "span 1");
+                testCaseBox.add(copyTextfield, "span 1");
+                this.editTestCaseArea.add(testCaseBox);
+                this.editTestCaseArea.revalidate();
 
             }
         }
