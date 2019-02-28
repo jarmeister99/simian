@@ -45,7 +45,6 @@ public class SimianGui extends JPanel {
         buildGui();
         attachListeners();
 
-
     }
 
     private void buildGui() {
@@ -144,6 +143,7 @@ public class SimianGui extends JPanel {
         JButton deleteCase = new JButton("X");
         deleteCase.addActionListener(new DeleteParentButtonListener());
 
+        // Populate testcase frame
         populateTestCase(testCase);
         testCase.add(deleteCase, "span 1");
 
@@ -155,21 +155,23 @@ public class SimianGui extends JPanel {
         Component[] components = this.addTestCaseArea.getComponents();
         for (int i = 0; i < components.length - 1; i++) {
             if (components[i] instanceof JTextField) {
-                JTextField copyTextfield = new JTextField();
-                JLabel copyLabel = new JLabel();
-
                 JTextField currentTextField = (JTextField) components[i];
-                copyTextfield = new JTextField();
-                copyTextfield.setText(currentTextField.getText());
-                copyTextfield.setSize(currentTextField.getSize());
-
                 JLabel current_label = (JLabel) components[i + 1];
-                copyLabel = new JLabel();
-                copyLabel.setText(current_label.getText());
-                copyLabel.setSize(current_label.getSize());
+                if (!(currentTextField.getText().equals("0"))) {
+                    System.out.println(currentTextField.getText());
+                    JTextField copyTextfield = new JTextField();
+                    copyTextfield.setText(currentTextField.getText());
+                    currentTextField.setText("0");
+                    copyTextfield.setSize(currentTextField.getSize());
 
-                testCase.add(copyLabel, "span 1");
-                testCase.add(copyTextfield, "span 1");
+
+                    JLabel copyLabel = new JLabel();
+                    copyLabel.setText(current_label.getText());
+                    copyLabel.setSize(current_label.getSize());
+
+                    testCase.add(copyLabel, "span 1");
+                    testCase.add(copyTextfield, "span 1");
+                }
 
             }
         }
@@ -201,7 +203,7 @@ public class SimianGui extends JPanel {
 
     }
 
-    private void killParent(Component child){
+    private void killParent(Component child) {
 
         // child is the button
 
@@ -228,7 +230,7 @@ public class SimianGui extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();
-            if (source instanceof Component){
+            if (source instanceof Component) {
                 Component child = (Component) source;
                 killParent(child);
             }
