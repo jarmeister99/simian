@@ -56,7 +56,7 @@ public class SimianGui extends JPanel {
         this.add(this.addTestCaseLabel, "span 2 1");
 
         this.editTestCaseArea = new JPanel();
-        this.editTestCaseArea.setLayout(new MigLayout("wrap 2"));
+        this.editTestCaseArea.setLayout(new MigLayout("wrap 1"));
         this.scrollEditTestCaseArea = new JScrollPane(this.editTestCaseArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.scrollEditTestCaseArea.setPreferredSize(new Dimension(250, 400));
         this.add(this.scrollEditTestCaseArea, "span 2 6");
@@ -128,6 +128,9 @@ public class SimianGui extends JPanel {
     }
 
     private void addTestCase() {
+        JPanel testCaseBox = new JPanel();
+        testCaseBox.setLayout(new MigLayout("wrap 2"));
+
         Component[] components = this.addTestCaseArea.getComponents();
         for (int i = 0; i < components.length - 1; i++) {
             if (components[i] instanceof JTextField) {
