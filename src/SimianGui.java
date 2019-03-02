@@ -1,3 +1,4 @@
+import components.TestCase;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -7,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SimianGui extends JPanel {
     private MigLayout layout;
@@ -130,66 +132,52 @@ public class SimianGui extends JPanel {
         this.addTestCaseArea.revalidate();
     }
 
-    // Uses the values in the ADD_TESTCASE_AREA to create a JPanel displaying them
-    // JPanel contains a self destruct button
     private JPanel createTestCase() {
-
-        // Create testcase frame
-        JPanel testCase = new JPanel();
-        testCase.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        testCase.setLayout(new MigLayout("wrap 2"));
-
-
-
-        // Populate testcase frame
-        populateTestCase(testCase);
-
+        JPanel testCase = new TestCase(getSignalInput(), getDelay());
+        resetSignalInputs();
         return testCase;
     }
 
-    // fills a JPanel based off of input from ADD_TESTCASE_AREA
-    private void populateTestCase(JPanel testCase) {
+    // create a Hashmap of <String label, Integer value> from the ADD_TESTCASE_AREA;
+    private HashMap<String, Integer> getSignalInput() {
+        HashMap<String, Integer> signalInput = new HashMap<>();
         Component[] components = this.addTestCaseArea.getComponents();
-        if (components.length != 0) {
-            for (int i = 0; i < components.length - 1; i++) {
+        if (components.length == 0) {
+            return signalInput;
+        }
+        for (int i = 0; i < components.length - 2; i += 2) {
+            JLabel label = (JLabel) components[i + 1];
+            JTextField textField = (JTextField) components[i];
+            signalInput.put(label.getText(), Integer.parseInt(textField.getText()));
+        }
+        return signalInput;
+    }
+
+    private void resetSignalInputs(){
+        Component[] components = this.addTestCaseArea.getComponents();
+        if (components.length != 0){
+            for (int i = 0; i < components.length - 1; i ++){
                 if (components[i] instanceof JTextField) {
-                    JTextField currentTextField = (JTextField) components[i];
-                    JLabel current_label = (JLabel) components[i + 1];
-                    if (!(currentTextField.getText().equals("0"))) {
-                        JTextField copyTextfield = new JTextField();
-                        copyTextfield.setText(currentTextField.getText());
-                        currentTextField.setText("0");
-                        copyTextfield.setSize(currentTextField.getSize());
-
-
-                        JLabel copyLabel = new JLabel();
-                        copyLabel.setText(current_label.getText());
-                        copyLabel.setSize(current_label.getSize());
-
-                        testCase.add(copyLabel, "span 1");
-                        testCase.add(copyTextfield, "span 1");
-                    }
-
+                    JTextField textField = (JTextField) components[i];
+                    textField.setText("0");
                 }
             }
-            JLabel waitLabel = new JLabel();
-            JTextField lastComponent = (JTextField) components[components.length - 1];
-            waitLabel.setText(lastComponent.getText());
-            testCase.add(waitLabel, "span 1");
-
-            // Create self destruct button
-            JButton deleteCase = new JButton("X");
-            deleteCase.addActionListener(new DeleteParentButtonListener());
-            testCase.add(deleteCase, "span 1");
         }
+    }
+    private int getDelay() {
+        Component[] components = this.addTestCaseArea.getComponents();
+        if (components.length == 0) {
+            return -1;
+        }
+        JTextField delay = (JTextField) components[components.length - 1];
+        return Integer.parseInt(delay.getText());
     }
 
     private void addTestCase() {
-        if (addTestCaseArea.getComponents().length > 0) {
-            this.editTestCaseArea.add(createTestCase(), "span 1");
-            this.editTestCaseArea.revalidate();
-            this.editTestCaseArea.updateUI();
-        }
+        this.editTestCaseArea.add(createTestCase(), "span 1");
+        this.editTestCaseArea.revalidate();
+        this.editTestCaseArea.updateUI();
+
     }
 
     private void submitHeader() {
@@ -203,13 +191,12 @@ public class SimianGui extends JPanel {
         // get signals from header parser
         signals = headerParser.findInputs();
 
-        if (signals.size() > 0){
+        if (signals.size() > 0) {
             for (String signal : signals) {
                 addSignal(signal);
             }
             addWait();
-        }
-        else{
+        } else {
             /* TODO: turn this into a reset function */
             addTestCaseArea.removeAll();
             addTestCaseArea.repaint();
@@ -219,18 +206,6 @@ public class SimianGui extends JPanel {
 
     }
 
-    private void killParent(Component child) {
-
-        // child is the button
-
-        // parent is the test case panel
-        Component parent = child.getParent();
-
-        // grandparent is the edit test case panel
-        this.editTestCaseArea.remove(parent);
-        this.scrollEditTestCaseArea.repaint();
-        this.scrollEditTestCaseArea.updateUI();
-    }
 
     private class InputHeaderButtonListener implements ActionListener {
 
@@ -238,18 +213,6 @@ public class SimianGui extends JPanel {
         public void actionPerformed(ActionEvent e) {
             submitHeader();
 
-        }
-    }
-
-    private class DeleteParentButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Object source = e.getSource();
-            if (source instanceof Component) {
-                Component child = (Component) source;
-                killParent(child);
-            }
         }
     }
 
