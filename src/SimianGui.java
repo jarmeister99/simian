@@ -1,3 +1,4 @@
+import components.SetTestCase;
 import components.TestCase;
 import net.miginfocom.swing.MigLayout;
 
@@ -34,13 +35,12 @@ public class SimianGui extends JPanel {
     private JScrollPane scrollOutputCodeArea;
     private JTextArea outputCodeArea;
 
-    private ArrayList<String> signals;
-
     private HeaderParser headerParser;
+
+    private SetTestCase setTestCase;
 
     public SimianGui() {
         this.layout = new MigLayout("wrap 8");
-        this.signals = new ArrayList<String>();
         this.headerParser = new HeaderParser();
         this.setLayout(this.layout);
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -108,28 +108,17 @@ public class SimianGui extends JPanel {
         this.addTestCaseButton.addActionListener(new AddTestCaseButtonListener());
     }
 
-    private void addSignal(String signal) {
-        JLabel label = new JLabel(signal);
+    private void addTestCase() {
+        if (this.setTestCase != null) {
+            HashMap<String, Integer> signals = getSignalInput();
+            int delay = getDelay();
+            if (signals.size() > 0 && delay != -1) {
+                this.editTestCaseArea.add(createTestCase(), "span 1");
+                this.editTestCaseArea.revalidate();
+                this.editTestCaseArea.updateUI();
+            }
+        }
 
-        JTextField textField = new JTextField("0");
-        textField.setPreferredSize(new Dimension(90, 20));
-
-        this.addTestCaseArea.add(textField);
-        this.addTestCaseArea.add(label);
-
-        this.addTestCaseArea.revalidate();
-    }
-
-    private void addWait() {
-        JLabel label = new JLabel("Wait for: ");
-
-        JTextField textField = new JTextField("20");
-        textField.setPreferredSize(new Dimension(90, 20));
-
-        this.addTestCaseArea.add(label, "span 1");
-        this.addTestCaseArea.add(textField, "span 2");
-
-        this.addTestCaseArea.revalidate();
     }
 
     private JPanel createTestCase() {
@@ -138,72 +127,71 @@ public class SimianGui extends JPanel {
         return testCase;
     }
 
-    // create a Hashmap of <String label, Integer value> from the ADD_TESTCASE_AREA;
     private HashMap<String, Integer> getSignalInput() {
         HashMap<String, Integer> signalInput = new HashMap<>();
-        Component[] components = this.addTestCaseArea.getComponents();
+        Component[] components = this.setTestCase.getComponents();
         if (components.length == 0) {
             return signalInput;
         }
         for (int i = 0; i < components.length - 2; i += 2) {
             JLabel label = (JLabel) components[i + 1];
             JTextField textField = (JTextField) components[i];
-            signalInput.put(label.getText(), Integer.parseInt(textField.getText()));
+            if (!(textField.getText().equals(""))) {
+                signalInput.put(label.getText(), Integer.parseInt(textField.getText()));
+            }
+
         }
         return signalInput;
     }
 
-    private void resetSignalInputs(){
-        Component[] components = this.addTestCaseArea.getComponents();
-        if (components.length != 0){
-            for (int i = 0; i < components.length - 1; i ++){
+    private void resetSignalInputs() {
+        Component[] components = this.setTestCase.getComponents();
+        if (components.length != 0) {
+            for (int i = 0; i < components.length - 1; i++) {
                 if (components[i] instanceof JTextField) {
                     JTextField textField = (JTextField) components[i];
-                    textField.setText("0");
+                    textField.setText("");
                 }
             }
         }
     }
+
     private int getDelay() {
-        Component[] components = this.addTestCaseArea.getComponents();
+        Component[] components = this.setTestCase.getComponents();
         if (components.length == 0) {
             return -1;
         }
         JTextField delay = (JTextField) components[components.length - 1];
-        return Integer.parseInt(delay.getText());
-    }
-
-    private void addTestCase() {
-        this.editTestCaseArea.add(createTestCase(), "span 1");
-        this.editTestCaseArea.revalidate();
-        this.editTestCaseArea.updateUI();
-
+        if (!(delay.getText().equals(""))) {
+            return Integer.parseInt(delay.getText());
+        }
+        return -1;
     }
 
     private void submitHeader() {
-        // remove current signals
-        addTestCaseArea.removeAll();
-        signals.clear();
+        addSetTestCase();
+    }
 
-        // load input header to header parser
-        headerParser.load(inputHeaderArea.getText());
-
-        // get signals from header parser
-        signals = headerParser.findInputs();
-
-        if (signals.size() > 0) {
-            for (String signal : signals) {
-                addSignal(signal);
-            }
-            addWait();
+    private void addSetTestCase() {
+        this.addTestCaseArea.removeAll();
+        ArrayList<String> signals = this.getSignals();
+        if (signals.size() != 0) {
+            this.setTestCase = new SetTestCase(signals);
+            this.addTestCaseArea.add(this.setTestCase, "span 1");
         } else {
-            /* TODO: turn this into a reset function */
-            addTestCaseArea.removeAll();
-            addTestCaseArea.repaint();
-            editTestCaseArea.removeAll();
-            editTestCaseArea.repaint();
+            this.editTestCaseArea.removeAll();
+            this.editTestCaseArea.revalidate();
+            this.editTestCaseArea.repaint();
+            this.addTestCaseArea.removeAll();
+            this.addTestCaseArea.revalidate();
+            this.addTestCaseArea.repaint();
         }
+        this.addTestCaseArea.revalidate();
+    }
 
+    private ArrayList<String> getSignals() {
+        headerParser.load(inputHeaderArea.getText());
+        return headerParser.findInputs();
     }
 
 

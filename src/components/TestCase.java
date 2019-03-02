@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TestCase extends JPanel {
@@ -15,6 +14,7 @@ public class TestCase extends JPanel {
     private HashMap<String, Integer> signals;
 
     public TestCase(HashMap<String, Integer> signals, int delay) {
+
         this.signals = signals;
         JButton deleteCase = new JButton("X");
         deleteCase.addActionListener(new DeleteCaseButtonListener());
@@ -26,6 +26,7 @@ public class TestCase extends JPanel {
         this.add(new JLabel(Integer.toString(delay)), "span 1");
         this.add(deleteCase, "span 1");
         this.repaint();
+
 
     }
 
