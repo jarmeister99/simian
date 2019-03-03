@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class SimianGui extends JPanel {
@@ -38,6 +39,7 @@ public class SimianGui extends JPanel {
     private HeaderParser headerParser;
 
     private SetTestCase setTestCase;
+    private ArrayList<String> inputs;
 
     public SimianGui() {
         this.layout = new MigLayout("wrap 8");
@@ -106,6 +108,7 @@ public class SimianGui extends JPanel {
         this.inputHeaderArea.addMouseListener(new InputHeaderAreaListener());
         this.inputHeaderButton.addActionListener(new InputHeaderButtonListener());
         this.addTestCaseButton.addActionListener(new AddTestCaseButtonListener());
+        this.generateButton.addActionListener((new GenerateCodeButtonListener()));
     }
 
     private void addTestCase() {
@@ -174,9 +177,11 @@ public class SimianGui extends JPanel {
 
     private void addSetTestCase() {
         this.addTestCaseArea.removeAll();
-        ArrayList<String> signals = this.getSignals();
-        if (signals.size() != 0) {
-            this.setTestCase = new SetTestCase(signals);
+        ArrayList<String> inputs = this.getInputs();
+        this.inputs = inputs;
+        if (inputs.size() != 0) {
+            ArrayList<String> signalInputs = new ArrayList<String>(inputs.subList(1, inputs.size()));
+            this.setTestCase = new SetTestCase(signalInputs);
             this.addTestCaseArea.add(this.setTestCase, "span 1");
         } else {
             this.editTestCaseArea.removeAll();
@@ -189,9 +194,9 @@ public class SimianGui extends JPanel {
         this.addTestCaseArea.revalidate();
     }
 
-    private ArrayList<String> getSignals() {
+    private ArrayList<String> getInputs() {
         headerParser.load(inputHeaderArea.getText());
-        return headerParser.findInputs();
+        return headerParser.getInputs();
     }
 
 
@@ -240,5 +245,11 @@ public class SimianGui extends JPanel {
         }
     }
 
+    private class GenerateCodeButtonListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
 
 }
