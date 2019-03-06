@@ -37,7 +37,6 @@ public class HeaderParser {
                 .replaceAll(":0]", "")
                 .replaceAll(",", "")
                 .replaceAll(" +", " ");
-        System.out.println(newString);
         return newString;
     }
 

@@ -37,6 +37,7 @@ public class SimianGui extends JPanel {
     private JTextArea outputCodeTextArea;
 
     private HeaderParser headerParser;
+    private CodeWriter codeWriter;
 
     private SetTestCase setTestCase;
 
@@ -196,6 +197,36 @@ public class SimianGui extends JPanel {
         return headerParser.getSignals();
     }
 
+    private void generateCode(){
+        LinkedHashMap<String, Integer> signals = this.headerParser.getSignals();
+        String moduleName = this.headerParser.getModuleName();
+        ArrayList<LinkedHashMap<String, Integer>> signalCases = this.getSignalCases();
+        ArrayList<Integer> delays = this.getCaseDelays();
+        this.codeWriter = new CodeWriter(signals, moduleName, signalCases, delays);
+    }
+
+    private ArrayList<LinkedHashMap<String, Integer>> getSignalCases(){
+        ArrayList<LinkedHashMap<String, Integer>> signalCases = new ArrayList<>();
+        for (Component c : this.editTestCaseArea.getComponents()){
+            if (c instanceof TestCase){
+                TestCase tc = (TestCase) c;
+                signalCases.add(tc.getSignals());
+            }
+        }
+        return signalCases;
+    }
+
+    private ArrayList<Integer> getCaseDelays(){
+        ArrayList<Integer> caseDelays = new ArrayList<>();
+        for (Component c : this.editTestCaseArea.getComponents()){
+            if (c instanceof TestCase){
+                TestCase tc = (TestCase) c;
+                caseDelays.add(tc.getDelay());
+            }
+        }
+        return caseDelays;
+    }
+
 
     private class InputHeaderButtonListener implements ActionListener {
 
@@ -246,6 +277,7 @@ public class SimianGui extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            generateCode();
         }
     }
 
