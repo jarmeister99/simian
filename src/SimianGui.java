@@ -9,32 +9,31 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class SimianGui extends JPanel {
     private MigLayout layout;
 
     // COLUMNS 1-2
-    private JScrollPane scrollInputHeaderArea;
+    private JScrollPane scrollInputHeaderTextArea;
     private JLabel inputHeaderLabel;
-    private JTextArea inputHeaderArea;
-    private JButton inputHeaderButton;
+    private JTextArea inputHeaderTextArea;
+    private JButton submitHeaderButton;
 
     // COLUMNS 3-4
-    private JScrollPane scrollAddTestCaseArea;
-    private JLabel addTestCaseLabel;
-    private JPanel addTestCaseArea;
+    private JScrollPane scrollInputSignalsArea;
+    private JLabel inputSignalsLabel;
+    private JPanel inputSignalsArea;
     private JButton addTestCaseButton;
-    private JButton generateButton;
+    private JButton generateCodeButton;
 
     // COLUMNS 5-6
     private JScrollPane scrollEditTestCaseArea;
     private JPanel editTestCaseArea;
 
     // COLUMNS 7-8
-    private JScrollPane scrollOutputCodeArea;
-    private JTextArea outputCodeArea;
+    private JScrollPane scrollOutputCodeTextArea;
+    private JTextArea outputCodeTextArea;
 
     private HeaderParser headerParser;
 
@@ -55,8 +54,8 @@ public class SimianGui extends JPanel {
         this.inputHeaderLabel = new JLabel("Paste Module Header");
         this.add(this.inputHeaderLabel, "span 2 1");
 
-        this.addTestCaseLabel = new JLabel("Add Test Cases");
-        this.add(this.addTestCaseLabel, "span 2 1");
+        this.inputSignalsLabel = new JLabel("Add Test Cases");
+        this.add(this.inputSignalsLabel, "span 2 1");
 
         this.editTestCaseArea = new JPanel();
         this.editTestCaseArea.setLayout(new MigLayout("wrap 1"));
@@ -65,13 +64,13 @@ public class SimianGui extends JPanel {
         this.scrollEditTestCaseArea.getVerticalScrollBar().setUnitIncrement(16);
         this.add(this.scrollEditTestCaseArea, "span 2 6");
 
-        this.outputCodeArea = new JTextArea();
-        this.scrollOutputCodeArea = new JScrollPane(this.outputCodeArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.scrollOutputCodeArea.setPreferredSize(new Dimension(250, 400));
-        this.scrollOutputCodeArea.getVerticalScrollBar().setUnitIncrement(16);
-        this.add(this.scrollOutputCodeArea, "span 2 6");
+        this.outputCodeTextArea = new JTextArea();
+        this.scrollOutputCodeTextArea = new JScrollPane(this.outputCodeTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this.scrollOutputCodeTextArea.setPreferredSize(new Dimension(250, 400));
+        this.scrollOutputCodeTextArea.getVerticalScrollBar().setUnitIncrement(16);
+        this.add(this.scrollOutputCodeTextArea, "span 2 6");
 
-        this.inputHeaderArea = new JTextArea(
+        this.inputHeaderTextArea = new JTextArea(
                 "module COOL_MODULE(\n" +
                         "    input in1, in2, in3, in4,\n" +
                         "    input [1:0] in5,\n" +
@@ -79,36 +78,36 @@ public class SimianGui extends JPanel {
                         "    output reg [9:0] out1\n" +
                         ");"
         );
-        this.scrollInputHeaderArea = new JScrollPane(this.inputHeaderArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.scrollInputHeaderArea.setPreferredSize(new Dimension(250, 350));
-        this.scrollInputHeaderArea.getVerticalScrollBar().setUnitIncrement(16);
-        this.add(this.scrollInputHeaderArea, "span 2 4");
+        this.scrollInputHeaderTextArea = new JScrollPane(this.inputHeaderTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this.scrollInputHeaderTextArea.setPreferredSize(new Dimension(250, 350));
+        this.scrollInputHeaderTextArea.getVerticalScrollBar().setUnitIncrement(16);
+        this.add(this.scrollInputHeaderTextArea, "span 2 4");
 
-        this.addTestCaseArea = new JPanel();
-        this.addTestCaseArea.setLayout(new MigLayout("wrap 2"));
-        this.scrollAddTestCaseArea = new JScrollPane(this.addTestCaseArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.scrollAddTestCaseArea.setPreferredSize(new Dimension(300, 350));
-        this.scrollAddTestCaseArea.getVerticalScrollBar().setUnitIncrement(16);
-        this.add(this.scrollAddTestCaseArea, "span 2 4");
+        this.inputSignalsArea = new JPanel();
+        this.inputSignalsArea.setLayout(new MigLayout("wrap 2"));
+        this.scrollInputSignalsArea = new JScrollPane(this.inputSignalsArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this.scrollInputSignalsArea.setPreferredSize(new Dimension(300, 350));
+        this.scrollInputSignalsArea.getVerticalScrollBar().setUnitIncrement(16);
+        this.add(this.scrollInputSignalsArea, "span 2 4");
 
-        this.inputHeaderButton = new JButton("Submit Header");
-        this.inputHeaderButton.setPreferredSize(new Dimension(250, 20));
-        this.add(this.inputHeaderButton, "span 2 1");
+        this.submitHeaderButton = new JButton("Submit Header");
+        this.submitHeaderButton.setPreferredSize(new Dimension(250, 20));
+        this.add(this.submitHeaderButton, "span 2 1");
 
         this.addTestCaseButton = new JButton("Add");
         this.addTestCaseButton.setPreferredSize(new Dimension(150, 20));
         this.add(this.addTestCaseButton, "span 1 1");
 
-        this.generateButton = new JButton("Gen Out");
-        this.generateButton.setPreferredSize(new Dimension(150, 20));
-        this.add(this.generateButton, "span 1 1");
+        this.generateCodeButton = new JButton("Gen Out");
+        this.generateCodeButton.setPreferredSize(new Dimension(150, 20));
+        this.add(this.generateCodeButton, "span 1 1");
     }
 
     private void attachListeners() {
-        this.inputHeaderArea.addMouseListener(new InputHeaderAreaListener());
-        this.inputHeaderButton.addActionListener(new InputHeaderButtonListener());
+        this.inputHeaderTextArea.addMouseListener(new InputHeaderAreaListener());
+        this.submitHeaderButton.addActionListener(new InputHeaderButtonListener());
         this.addTestCaseButton.addActionListener(new AddTestCaseButtonListener());
-        this.generateButton.addActionListener((new GenerateCodeButtonListener()));
+        this.generateCodeButton.addActionListener((new GenerateCodeButtonListener()));
     }
 
     private void addTestCase() {
@@ -176,26 +175,26 @@ public class SimianGui extends JPanel {
     }
 
     private void addSetTestCase() {
-        this.addTestCaseArea.removeAll();
+        this.inputSignalsArea.removeAll();
         ArrayList<String> inputs = this.getInputs();
         this.inputs = inputs;
         if (inputs.size() != 0) {
             ArrayList<String> signalInputs = new ArrayList<String>(inputs.subList(1, inputs.size()));
             this.setTestCase = new SetTestCase(signalInputs);
-            this.addTestCaseArea.add(this.setTestCase, "span 1");
+            this.inputSignalsArea.add(this.setTestCase, "span 1");
         } else {
             this.editTestCaseArea.removeAll();
             this.editTestCaseArea.revalidate();
             this.editTestCaseArea.repaint();
-            this.addTestCaseArea.removeAll();
-            this.addTestCaseArea.revalidate();
-            this.addTestCaseArea.repaint();
+            this.inputSignalsArea.removeAll();
+            this.inputSignalsArea.revalidate();
+            this.inputSignalsArea.repaint();
         }
-        this.addTestCaseArea.revalidate();
+        this.inputSignalsArea.revalidate();
     }
 
     private ArrayList<String> getInputs() {
-        headerParser.load(inputHeaderArea.getText());
+        headerParser.load(inputHeaderTextArea.getText());
         return headerParser.getInputs();
     }
 
@@ -221,7 +220,7 @@ public class SimianGui extends JPanel {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            inputHeaderArea.setText("");
+            inputHeaderTextArea.setText("");
         }
 
         @Override
