@@ -3,9 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="2620389b-e0b2-49ea-90a0-a2065a860e69" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/simian/HeaderParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/simian/HeaderParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CodeWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CodeWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/simian/SimianGui$AddTestCaseButtonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/simian/SimianGui$AddTestCaseButtonListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/simian/SimianGui$InputHeaderAreaListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/simian/SimianGui$InputHeaderAreaListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/simian/SimianGui$InputHeaderButtonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/simian/SimianGui$InputHeaderButtonListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/simian/SimianGui.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/simian/SimianGui.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HeaderParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HeaderParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SimianGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimianGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SetTestCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SetTestCase.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,24 +34,24 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="iml" value="1" />
-          <entry key="java" value="10" />
+          <entry key="java" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="IDEA_MODULE" value="1" />
-          <entry key="JAVA" value="10" />
+          <entry key="JAVA" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="24134" />
+          <entry key="java" value="25837" />
           <entry key="txt" value="225" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="24134" />
+          <entry key="JAVA" value="25837" />
           <entry key="PLAIN_TEXT" value="225" />
         </counts>
       </usages-collector>
@@ -58,7 +62,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Simian.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
+            <state relative-caret-position="170">
               <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -79,11 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SimianGui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+            <state relative-caret-position="762">
+              <caret line="177" column="42" lean-forward="true" selection-start-line="177" selection-start-column="42" selection-end-line="177" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#buildGui#0;class#SimianGui#0" />
@@ -98,13 +102,28 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/SetTestCase.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="339">
+              <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/HeaderParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="26" column="34" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
+            <state relative-caret-position="271">
+              <caret line="66" column="9" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#250#251#0" expanded="true" />
+                <element signature="e#309#310#0" expanded="true" />
+                <element signature="e#529#530#0" expanded="true" />
+                <element signature="e#564#565#0" expanded="true" />
+                <element signature="e#599#600#0" expanded="true" />
+                <element signature="e#637#638#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -127,6 +146,7 @@
       <find>edittestcasearea</find>
       <find>edittestcasearea = new</find>
       <find>system.out</find>
+      <find>hashmap</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -135,13 +155,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/components/SetTestCase.java" />
         <option value="$PROJECT_DIR$/src/components/TestCase.java" />
         <option value="$PROJECT_DIR$/src/SimianSettings.java" />
         <option value="$PROJECT_DIR$/src/Simian.java" />
-        <option value="$PROJECT_DIR$/src/HeaderParser.java" />
         <option value="$PROJECT_DIR$/src/CodeWriter.java" />
+        <option value="$PROJECT_DIR$/src/HeaderParser.java" />
         <option value="$PROJECT_DIR$/src/SimianGui.java" />
+        <option value="$PROJECT_DIR$/src/components/SetTestCase.java" />
       </list>
     </option>
   </component>
@@ -185,7 +205,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551831471110" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551833531885" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../lib/miglayout-3.5.5.jar!/" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
@@ -292,7 +312,14 @@
       <option name="project" value="LOCAL" />
       <updated>1551654237567</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="improved sanitizer and regex">
+      <created>1551831491018</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1551831491018</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -317,7 +344,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32885906" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32765958" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -346,13 +373,6 @@
     <entry file="file://$PROJECT_DIR$/simian.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/SetTestCase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/TestCase.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -367,26 +387,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Simian.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HeaderParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="26" column="34" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/CodeWriter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -397,10 +397,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Simian.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HeaderParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="66" column="9" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#250#251#0" expanded="true" />
+            <element signature="e#309#310#0" expanded="true" />
+            <element signature="e#529#530#0" expanded="true" />
+            <element signature="e#564#565#0" expanded="true" />
+            <element signature="e#599#600#0" expanded="true" />
+            <element signature="e#637#638#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/SimianGui.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+        <state relative-caret-position="762">
+          <caret line="177" column="42" lean-forward="true" selection-start-line="177" selection-start-column="42" selection-end-line="177" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#buildGui#0;class#SimianGui#0" />
@@ -411,6 +437,13 @@
             <element signature="method#mouseEntered#0;class#InputHeaderAreaListener#0;class#SimianGui#0" />
             <element signature="method#mouseExited#0;class#InputHeaderAreaListener#0;class#SimianGui#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/SetTestCase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
         </state>
       </provider>
     </entry>

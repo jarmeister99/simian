@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class SimianGui extends JPanel {
     private MigLayout layout;
@@ -38,7 +39,6 @@ public class SimianGui extends JPanel {
     private HeaderParser headerParser;
 
     private SetTestCase setTestCase;
-    private ArrayList<String> inputs;
 
     public SimianGui() {
         this.layout = new MigLayout("wrap 8");
@@ -112,7 +112,7 @@ public class SimianGui extends JPanel {
 
     private void addTestCase() {
         if (this.setTestCase != null) {
-            HashMap<String, Integer> signals = getSignalInput();
+            LinkedHashMap<String, Integer> signals = getSignalInput();
             int delay = getDelay();
             if (signals.size() > 0 && delay != -1) {
                 this.editTestCaseArea.add(createTestCase(), "span 1");
@@ -129,8 +129,8 @@ public class SimianGui extends JPanel {
         return testCase;
     }
 
-    private HashMap<String, Integer> getSignalInput() {
-        HashMap<String, Integer> signalInput = new HashMap<>();
+    private LinkedHashMap<String, Integer> getSignalInput() {
+        LinkedHashMap<String, Integer> signalInput = new LinkedHashMap<>();
         Component[] components = this.setTestCase.getComponents();
         if (components.length == 0) {
             return signalInput;
@@ -176,10 +176,8 @@ public class SimianGui extends JPanel {
 
     private void addSetTestCase() {
         this.inputSignalsArea.removeAll();
-        ArrayList<String> inputs = this.getInputs();
-        this.inputs = inputs;
-        if (inputs.size() != 0) {
-            ArrayList<String> signalInputs = new ArrayList<String>(inputs.subList(1, inputs.size()));
+        LinkedHashMap<String, Integer> signalInputs = this.getInputs();
+        if (signalInputs.size() != 0) {
             this.setTestCase = new SetTestCase(signalInputs);
             this.inputSignalsArea.add(this.setTestCase, "span 1");
         } else {
@@ -193,9 +191,9 @@ public class SimianGui extends JPanel {
         this.inputSignalsArea.revalidate();
     }
 
-    private ArrayList<String> getInputs() {
+    private LinkedHashMap<String, Integer> getInputs() {
         headerParser.load(inputHeaderTextArea.getText());
-        return headerParser.getInputs();
+        return headerParser.getSignals();
     }
 
 

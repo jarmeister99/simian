@@ -1,56 +1,70 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class HeaderParser {
     private String header;
-    private ArrayList<String> signals;
-
-    public HeaderParser(String header) {
-        this.header = header;
-        this.signals = new ArrayList<>();
-    }
+    private LinkedHashMap<String, Integer> signals;
+    private String moduleName;
 
     public HeaderParser() {
+        this.signals = new LinkedHashMap<String, Integer>();
     }
 
-    ;
+    public HeaderParser(String header) {
+        this();
+        this.header = header;
+    }
 
     public void load(String header) {
         this.header = header;
+        this.getInputs();
+    }
+
+    public LinkedHashMap<String, Integer> getSignals(){
+        return this.signals;
+    }
+    public String getModuleName(){
+        return this.moduleName;
     }
 
     // lowercase
-    public static String sanitize(String string) {
+    private String sanitize(String string) {
         String newString = string.toLowerCase()
                 .replaceAll("\n", "")
-                .replaceAll("\\[\\d+\\:\\d\\]", "")
+                .replaceAll("\\[", "")
+                .replaceAll(":0]", "")
                 .replaceAll(",", "")
                 .replaceAll(" +", " ");
         System.out.println(newString);
         return newString;
     }
 
-    public ArrayList<String> getInputs() {
-        ArrayList<String> inputs = new ArrayList<>();
-        String[] signals = this.sanitize(this.header).split(" ");
+    private void getInputs() {
+        this.signals.clear();
+        String[] headerInfo = this.sanitize(this.header).split(" ");
+        this.moduleName = headerInfo[0];
 
-        boolean readInputs = false;
-        for (int i = 1; i < signals.length; i++) {
-            if (i == 1){
-                inputs.add(signals[i]);
+        boolean saveEnable = false;
+        int bitWidth = 1;
+        for (int i = 1; i < headerInfo.length; i++){
+            if (headerInfo[i].equals("input")){
+                bitWidth = 1;
+                saveEnable = true;
             }
-            else if (signals[i].equals("input")){
-                readInputs = true;
-                i++;
+            else if (headerInfo[i].equals("output")){
+                saveEnable = false;
             }
-            else if (signals[i].equals("output")){
-                readInputs = false;
+            else if (headerInfo[i].matches("\\d+")){
+                bitWidth = Integer.parseInt(headerInfo[i]) + 1;
             }
-            if (readInputs){
-                inputs.add(signals[i]);
+            else{
+                if (saveEnable){
+                    this.signals.put(headerInfo[i], bitWidth);
+                }
             }
         }
-        return inputs;
     }
 
 }
