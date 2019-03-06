@@ -63,4 +63,14 @@ public class TestCase extends JPanel {
             deleteSelf();
         }
     }
+
+    @Override
+    public String toString(){
+        String repr = "";
+        for (String signal : this.signals.keySet()){
+            repr += (signal + " <= " + this.signals.get(signal) + "\n");
+        }
+        repr += ("#" + this.getDelay() + "\n");
+        return repr;
+    }
 }
