@@ -18,8 +18,8 @@ public class CodeWriter {
     // TODO: replace this because this is stupid. Have a template file and then replace lines as needed
     public String generateCode(){
         String code = "";
-        code += ("module " + signals.get(0) + "();\n");
-        
+        code += ("module " + this.moduleName + "();\n");
+
         return code;
     }
 
