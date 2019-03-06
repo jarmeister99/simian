@@ -9,7 +9,7 @@ public class CodeWriter {
     private String moduleName;
     private ArrayList<TestCase> cases;
 
-    public CodeWriter(LinkedHashMap<String, Integer> signals, String moduleName, ArrayList<TestCase> cases;){
+    public CodeWriter(LinkedHashMap<String, Integer> signals, String moduleName, ArrayList<TestCase> cases){
         this.signals = signals;
         this.moduleName = moduleName;
         this.cases = cases;
