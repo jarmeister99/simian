@@ -200,17 +200,20 @@ public class SimianGui extends JPanel {
     private void generateCode(){
         LinkedHashMap<String, Integer> signals = this.headerParser.getSignals();
         String moduleName = this.headerParser.getModuleName();
-        ArrayList<LinkedHashMap<String, Integer>> signalCases = this.getSignalCases();
-        ArrayList<Integer> delays = this.getCaseDelays();
-        this.codeWriter = new CodeWriter(signals, moduleName, signalCases, delays);
+        ArrayList<TestCase> signalCases = this.getSignalCases();
+        this.codeWriter = new CodeWriter(signals, moduleName, signalCases);
+        this.outputCodeTextArea.setText(this.codeWriter.generateCode());
+        this.outputCodeTextArea.revalidate();
+        this.outputCodeTextArea.repaint();
+        this.scrollOutputCodeTextArea.updateUI();
     }
 
-    private ArrayList<LinkedHashMap<String, Integer>> getSignalCases(){
-        ArrayList<LinkedHashMap<String, Integer>> signalCases = new ArrayList<>();
+    private ArrayList<TestCase> getSignalCases(){
+        ArrayList<TestCase> signalCases = new ArrayList<>();
         for (Component c : this.editTestCaseArea.getComponents()){
             if (c instanceof TestCase){
                 TestCase tc = (TestCase) c;
-                signalCases.add(tc.getSignals());
+                signalCases.add(tc);
             }
         }
         return signalCases;
