@@ -32,6 +32,7 @@ public class HeaderParser {
     // lowercase
     private String sanitize(String string) {
         String newString = string.toLowerCase()
+                .replaceAll("[();]", "")
                 .replaceAll("\n", "")
                 .replaceAll("\\[", "")
                 .replaceAll(":0]", "")
@@ -43,7 +44,10 @@ public class HeaderParser {
     private void getInputs() {
         this.signals.clear();
         String[] headerInfo = this.sanitize(this.header).split(" ");
-        this.moduleName = headerInfo[0];
+        if (headerInfo.length == 1){
+            return;
+        }
+        this.moduleName = headerInfo[1];
 
         boolean saveEnable = false;
         int bitWidth = 1;

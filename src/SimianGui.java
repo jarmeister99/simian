@@ -177,6 +177,7 @@ public class SimianGui extends JPanel {
 
     private void addSetTestCase() {
         this.inputSignalsArea.removeAll();
+        this.outputCodeTextArea.setText("");
         LinkedHashMap<String, Integer> signalInputs = this.getInputs();
         if (signalInputs.size() != 0) {
             this.setTestCase = new SetTestCase(signalInputs);

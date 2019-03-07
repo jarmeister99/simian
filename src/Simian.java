@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
 public class Simian extends JFrame {
     public Simian(JPanel gui){
